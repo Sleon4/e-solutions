@@ -27,6 +27,10 @@ Volver a construir contenedores.
 ```bash
 docker compose up -d --build
 ```
+Volver a entrar al contenedor de Docker.
+```bash
+docker exec -it -u lion e-solutions-app bash
+```
 Ejecutar Migraciones (crean la estructura de base de datos).
 ```bash
 php lion migrate:fresh
