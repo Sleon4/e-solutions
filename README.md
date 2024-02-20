@@ -47,6 +47,8 @@ cd vite/e-solutions/ && npm install && npm run dev
 Abrir URLS:
 ```txt
 # PHPMyAdmin:
+# User: root
+# Pass: lion
 http://127.0.0.1:8080
 ```
 ```txt
