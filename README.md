@@ -46,6 +46,10 @@ cd vite/e-solutions/ && npm install && npm run dev
 
 Abrir URLS:
 ```txt
+# PHPMyAdmin:
+http://127.0.0.1:8080
+```
+```txt
 # FrontEnd:
 http://127.0.0.1:5173
 ```
