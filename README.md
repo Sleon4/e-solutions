@@ -54,5 +54,5 @@ DELETE - http://127.0.0.1:8000/api/users/{id}
 ```
 Si se requiere explorar la API por medio de postman ejecute el comando para generar una coleccion de postman, tenga en cuenta que si se ejecuta el API desde postman deben enviarsen todos los parametros requeridos para el funcionamiento base del API.
 ```bash
-php lion route:list
+php lion route:postman
 ```
