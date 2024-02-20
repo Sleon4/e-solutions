@@ -1,0 +1,80 @@
+version: "3.8"
+services:
+    app:
+        container_name: e-solutions-app
+        build:
+            context: .
+            dockerfile: Dockerfile
+        env_file:
+            - .env
+        ports:
+            - "8000:8000"
+            - "8001:8001"
+            - "9000:9000"
+            - "5173:5173"
+        volumes:
+            - ./:/var/www/html
+        depends_on:
+            - mysql
+            - phpmyadmin
+            - redis
+        networks:
+            - lion
+    redis:
+        image: redis
+        container_name: e-solutions-redis
+        restart: always
+        ports:
+            - "${REDIS_PORT}:${REDIS_PORT}"
+        volumes:
+            - redis_data:/var/lib/redis
+        environment:
+            REDIS_HOST: ${REDIS_HOST}
+            REDIS_PASSWORD: ${REDIS_PASSWORD}
+            REDIS_DATABASES: ${REDIS_DATABASES}
+        networks:
+            - lion
+    mailhog:
+        image: mailhog/mailhog
+        container_name: e-solutions-mailhog
+        restart: unless-stopped
+        ports:
+            - "8025:8025"
+            - "1025:1025"
+        networks:
+            - lion
+    mysql:
+        image: mysql
+        container_name: e-solutions-mysql
+        command: --default-authentication-plugin=mysql_native_password
+        ports:
+            - "${DB_PORT}:${DB_PORT}"
+        environment:
+            MYSQL_DATABASE: ${DB_NAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+        volumes:
+            - mysql_data:/var/lib/mysql
+        networks:
+            - lion
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: e-solutions-phpmyadmin
+        links:
+            - mysql:mysql
+        ports:
+            - 8080:80
+        environment:
+            PMA_HOST: ${DB_HOST}
+            MYSQL_USER: ${DB_USER}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+        networks:
+            - lion
+volumes:
+    mysql_data:
+    redis_data:
+        driver: local
+networks:
+    lion:
+        driver: bridge
